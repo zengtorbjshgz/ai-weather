@@ -181,7 +181,7 @@ const getUserLocation = (): Promise<{ lat: number; lng: number }> => {
 const convertToBaiduCoords = async (lat: number, lng: number) => {
   try {
     const response = await fetch(
-      `https://api.map.baidu.com/geoconv/v1/?coords=${lng},${lat}&from=1&to=5&ak=${BAIDU_AK}`
+      `/api/baidu/geoconv/v1/?coords=${lng},${lat}&from=1&to=5&ak=${BAIDU_AK}`
     )
     const data = await response.json()
     if (data.status === 0 && data.result && data.result.length > 0) {
@@ -200,7 +200,7 @@ const convertToBaiduCoords = async (lat: number, lng: number) => {
 const getDistrictId = async (lat: number, lng: number): Promise<string> => {
   try {
     const response = await fetch(
-      `https://api.map.baidu.com/reverse_geocoding/v3/?ak=${BAIDU_AK}&output=json&coordtype=bd09ll&location=${lat},${lng}`
+      `/api/baidu/reverse_geocoding/v3/?ak=${BAIDU_AK}&output=json&coordtype=bd09ll&location=${lat},${lng}`
     )
     const data = await response.json()
     if (data.status === 0 && data.result && data.result.addressComponent) {
@@ -241,7 +241,7 @@ const fetchWeatherData = async () => {
     console.log('区域ID:', districtId)
 
     // 调用天气API
-    const weatherUrl = `https://api.map.baidu.com/weather/v1/?district_id=${districtId}&data_type=all&ak=${BAIDU_AK}`
+    const weatherUrl = `/api/baidu/weather/v1/?district_id=${districtId}&data_type=all&ak=${BAIDU_AK}`
     const response = await fetch(weatherUrl)
     
     if (!response.ok) {
